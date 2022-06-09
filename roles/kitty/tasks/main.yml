@@ -1,0 +1,15 @@
+---
+
+- name: install kitty
+  become: yes
+  yum:
+    name: kitty
+    state: present
+
+- name: Ensure kitty.conf exists
+  copy:
+    src: kitty.conf
+    dest: "{{ ansible_env.HOME }}/.config/kitty/"
+    mode: 0755
+
+# TODO: kitty dont run in VBox right now: https://github.com/kovidgoyal/kitty/issues/2536

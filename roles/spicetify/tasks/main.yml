@@ -1,0 +1,43 @@
+---
+
+- name: Download install scripts
+  get_url:
+    url: "{{ item.url }}"
+    dest: /tmp/{{ item.name }}
+  loop:
+    - { url: https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.sh, name: spicetify-cli.sh }
+
+# This modifies the PATH in .bashrc and .bash_profile, but that's okay
+- name: Install spicetify-cli
+  command:
+    cmd: sh /tmp/spicetify-cli.sh
+    creates: "{{ ansible_env.HOME}}/.spicetify/spicetify"
+
+- name: Generate default config-xpui.ini file
+  command:
+    cmd: "{{ ansible_env.HOME }}/.spicetify/spicetify config"
+    creates: "{{ ansible_env.HOME }}/.config/spicetify/config-xpui.ini"
+  ignore_errors: yes
+
+# Not sure why it's like this, but we need to find the Spotify prefs location and tell spicetify about it
+- name: Ensure prefs_path is set
+  lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/spicetify/config-xpui.ini"
+    regexp: 'prefs_path\s*='
+    line: prefs_path              = {{ ansible_env.HOME }}/.var/app/com.spotify.Client/config/spotify/prefs
+
+- name: Open up permissions to Spotify (flatpak)
+  become: yes
+  block:
+    - name: perms on spotify
+      file:
+        path: /var/lib/flatpak/app/com.spotify.Client/x86_64/stable/active/files/extra/share/spotify
+        mode: 'a+rw'
+
+    - name: Open up permissions to spotify/Apps
+      file:
+        path: /var/lib/flatpak/app/com.spotify.Client/x86_64/stable/active/files/extra/share/spotify/Apps
+        mode: 'a+rw'
+        recurse: yes
+
+- import_tasks: install-catppuccin-theme.yml

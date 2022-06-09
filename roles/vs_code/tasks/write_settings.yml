@@ -1,0 +1,21 @@
+- name: Write Settings
+  block:
+    - name: create config directory
+      file:
+        path: '{{ ansible_env.HOME }}/.config/Code'
+        state: directory
+        mode: 'u=rwx,go=rx'
+
+    - name: create settings directory
+      file:
+        path: '{{ ansible_env.HOME }}/.config/Code/User'
+        state: directory
+        mode: 'u=rwx,go='
+
+    - name: write settings
+      template:
+        src: settings.json.j2
+        dest: '{{ ansible_env.HOME }}/.config/Code/User/settings.json'
+        mode: 'u=rw,go='
+
+  when: "vs_code_settings is defined and vs_code_settings not in ({}, '', None, omit)"

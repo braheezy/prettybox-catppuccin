@@ -1,0 +1,15 @@
+---
+- name: install VS Code repo
+  yum_repository:
+    name: code
+    description: Visual Studio Code repo
+    file: vscode
+    baseurl: '{{ vs_code_mirror }}/yumrepos/vscode'
+    gpgkey: '{{ vs_code_mirror }}/keys/microsoft.asc'
+    gpgcheck: '{{ vs_code_gpgcheck }}'
+  when: not vs_code_skip_add_repo
+
+- name: install VS Code
+  yum:
+    name: '{{ vs_code_package }}'
+    state: present

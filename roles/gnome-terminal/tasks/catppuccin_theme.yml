@@ -1,0 +1,21 @@
+---
+
+- name: Ensure theme installer file is present
+  get_url:
+    url: "https://raw.githubusercontent.com/catppuccin/gnome-terminal/main/install.sh"
+    dest: /tmp/
+
+- name: Ensure theme palette file is present
+  get_url:
+    url: "https://raw.githubusercontent.com/catppuccin/gnome-terminal/main/palette"
+    dest: /tmp/
+
+- name: Ensure profile is present
+  script:
+    cmd: gnome-profile.py {{ profile_name }} --add
+  changed_when: no
+
+- name: "Ensure theme is installed"
+  shell:
+    cmd: "yes yes | sh install.sh {{ profile_name }}"
+    chdir: /tmp

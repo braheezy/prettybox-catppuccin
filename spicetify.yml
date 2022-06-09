@@ -1,0 +1,7 @@
+---
+
+- name: Install and configure Catppuccin ports for Spicetify
+  hosts: all
+
+  roles:
+    - spicetify

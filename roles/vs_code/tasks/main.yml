@@ -1,0 +1,11 @@
+---
+
+- import_tasks: install.yml
+  become: yes
+
+- name: install Catppuccin extension
+  command:
+    cmd: "code --install-extension catppuccin.catppuccin-vsc"
+    creates: "{{ ansible_env.HOME }}/.vscode/extensions/catppuccin.catppuccin-vsc-*"
+
+- import_tasks: write_settings.yml

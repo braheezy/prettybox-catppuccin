@@ -1,0 +1,19 @@
+---
+
+- name: Ensure theme source is present
+  get_url:
+    url: "{{ gtk_theme_source_url }}"
+    dest: /tmp/
+
+- name: Install theme (rpm)
+  yum:
+    name: "/tmp/{{ gtk_theme_filename }}"
+    disable_gpg_check: "{{ disable_gpg_check }}"
+    state: present
+  when: gtk_theme_install_type == 'rpm'
+
+- name: Install theme (zip)
+  unarchive:
+    src: "/tmp/{{ gtk_theme_filename }}"
+    dest: "{{ gtk_theme_install_location }}"
+  when: gtk_theme_install_type == 'zip'

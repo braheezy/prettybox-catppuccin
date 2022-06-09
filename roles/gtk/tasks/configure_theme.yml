@@ -1,0 +1,17 @@
+- name: Configure theme in shell extensions
+  dconf:
+    key: "/org/gnome/shell/extensions/user-theme/name"
+    value: "'{{ gtk_theme_name }}'"
+    state: present
+
+- name: Configure theme in applications
+  dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'{{ gtk_theme_name }}'"
+    state: present
+
+- name: Suppress extensions notice in tweaks
+  dconf:
+    key: "/org/gnome/tweaks/show-extensions-notice"
+    value: "false"
+    state: present

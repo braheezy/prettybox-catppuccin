@@ -1,0 +1,16 @@
+---
+
+- name: Install and configure a bunch of Catppuccin ports
+  hosts: all
+
+  roles:
+    - base
+    - gnome-terminal
+    - gtk
+    - kitty
+    - vs_code
+
+  tasks:
+
+    - name: Final reboot for changes to take effect
+      reboot:

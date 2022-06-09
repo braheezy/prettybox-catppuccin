@@ -1,0 +1,17 @@
+---
+# Choose how the theme will be installed. Choices: {rpm, zip}
+gtk_theme_install_type: rpm
+# If the install type is rpm, whether or not the GPG key should be checked.
+disable_gpg_check: yes
+
+# The name of theme to install. This must match the name of the folder of the theme after it's installed.
+gtk_theme_name: Catppuccin-purple
+# The name of the theme file to fetch
+gtk_theme_filename: catppuccin-gtk-purple-0.1.4-1.fc35.noarch.rpm
+# URL to .rpm or .zip to fetch and install. For local path use file:// prefix
+gtk_theme_source_url: "https://github.com/mbraha/catppuccin-gtk-rpm/releases/download/v0.1.0/{{ gtk_theme_filename }}"
+
+# The install location for the theme. Only applies to .zip install.
+# System: /usr/share/themes
+# User: ~/.themes
+gtk_theme_install_location: /usr/share/themes

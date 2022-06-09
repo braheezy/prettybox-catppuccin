@@ -1,0 +1,13 @@
+# vagrant-libvirt is hella broken on Fedora-based distros. So we use this pre-built
+# docker image with all the dependencies instead.
+# https://github.com/vagrant-libvirt/vagrant-libvirt#using-the-container-image
+vg-libvirt(){
+  sudo docker run -i --rm \
+    -v /var/run/libvirt/:/var/run/libvirt/ \
+    -v ~/.vagrant.d:/.vagrant.d \
+    -v $(realpath "${PWD}"):${PWD} \
+    -w $(realpath "${PWD}") \
+    --network host \
+    vagrantlibvirt/vagrant-libvirt:latest \
+      vagrant $@
+}

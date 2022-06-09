@@ -1,0 +1,22 @@
+---
+- name: Ensure flatpak is installed
+  become: yes
+  yum:
+    name: flatpak
+    state: present
+
+- name: Add the flathub flatpak repository remote
+  become: yes
+  flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+
+# This seemed to intermittently failed from corrupt downloads.
+- name: Install spotify
+  become: yes
+  flatpak:
+    name: com.spotify.Client
+    state: present
+  retries: 3
+  delay: 3

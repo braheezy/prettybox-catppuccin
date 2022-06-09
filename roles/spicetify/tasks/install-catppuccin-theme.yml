@@ -1,0 +1,33 @@
+# From: https://github.com/catppuccin/spicetify
+---
+- name: Create the catppuccin theme directory
+  file:
+    path: "{{ ansible_env.HOME }}/.spicetify/Themes/catppuccin"
+    state: directory
+
+- name: Download theme static files
+  get_url:
+    url: "https://raw.githubusercontent.com/catppuccin/spicetify/main/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.spicetify/Themes/catppuccin/{{ item }}"
+  loop:
+    - color.ini
+    - user.css
+
+- name: Download theme extension file
+  get_url:
+    url: https://raw.githubusercontent.com/catppuccin/spicetify/main/catppuccin.js
+    dest: "{{ ansible_env.HOME }}/.spicetify/Extensions/catppuccin.js"
+
+- name: Apply theme
+  command: "{{ ansible_env.HOME }}/.spicetify/spicetify config {{ item }}"
+  loop:
+    - current_theme catppuccin
+    - color_scheme mauve
+    - inject_css 1 replace_colors 1 overwrite_assets 1
+    - extensions catppuccin.js
+
+- name: Update theme
+  shell: >
+    {{ ansible_env.HOME }}/.spicetify/spicetify backup &&
+    {{ ansible_env.HOME }}/.spicetify/spicetify backup apply &&
+    {{ ansible_env.HOME }}/.spicetify/spicetify update
