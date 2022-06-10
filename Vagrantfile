@@ -33,6 +33,10 @@ Vagrant.configure("2") do |config|
     l.memory = MEMORY
     l.disk_bus = "virtio"
 
+    l.video_type = 'qxl'
+    l.graphics_type = "spice"
+    l.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
+
     # l.memorybacking :access, :mode => "shared"
     override.vm.synced_folder "./", "/vagrant", disabled: false#, type: "virtiofs"
 
@@ -62,6 +66,11 @@ Vagrant.configure("2") do |config|
   config.vm.provision "catppuccin", type: "ansible_local" do |ansible|
     ansible.playbook = "provision.yml"
     # ansible.verbose = true
+  end
+
+  config.vm.provision "reboot", type: "shell" do |shell|
+    shell.inline = "echo 'rebooting'"
+    shell.reboot = true
   end
 
   config.vm.provision "test", type: "shell", run: "never" do |shell|
