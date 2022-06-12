@@ -1,0 +1,33 @@
+---
+
+- name: Download catppuccin wallpapers
+  get_url:
+    url: https://github.com/catppuccin/wallpapers/archive/refs/heads/main.zip
+    dest: /tmp/wallpapers.zip
+
+- name: Ensure target directory exists
+  become: yes
+  file:
+    path: /usr/share/backgrounds/catppuccin
+    state: directory
+    mode: 0755
+
+- name: Unzip wallpapers
+  become: yes
+  unarchive:
+    src: /tmp/wallpapers.zip
+    dest: /usr/share/backgrounds/catppuccin
+    creates: /usr/share/backgrounds/catppuccin/{{ wallpaper_file }}
+    remote_src: yes
+    # We need to junk the folders but that has a bug.
+    # https://github.com/ansible/ansible/issues/54748
+    extra_opts:
+      - -j
+    # The files are unzipped so whatever
+    ignore_errors: true
+
+- name: Set wallpaper
+  dconf:
+    key: "/org/gnome/desktop/background/picture-uri"
+    value: "'file:///usr/share/backgrounds/catppuccin/{{ wallpaper_file }}'"
+    state: present

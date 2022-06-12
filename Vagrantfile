@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "catppuccin", type: "ansible_local", run: "never" do |ansible|
     ansible.playbook = "provision.yml"
-    # ansible.verbose = true
+    ansible.verbose = true
   end
 
   config.vm.provision "test", type: "ansible_local", run: "never" do |ansible|
