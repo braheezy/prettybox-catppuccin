@@ -4,6 +4,7 @@
   hosts: all
 
   roles:
+    - alacritty
     - gnome-terminal
     - gtk
     - kitty

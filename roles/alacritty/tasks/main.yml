@@ -1,0 +1,19 @@
+---
+
+- name: Install Alacritty
+  become: yes
+  yum:
+    name: alacritty
+    state: present
+
+- name: Ensure alacritty config dir exists
+  file:
+    path: '{{ ansible_env.HOME }}/.config/alacritty'
+    state: directory
+    mode: 0755
+
+- name: Ensure alacritty.yml exists
+  get_url:
+    url: https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin.yml
+    dest: "{{ ansible_env.HOME }}/.config/alacritty/"
+    mode: 0755

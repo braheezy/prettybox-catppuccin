@@ -85,9 +85,10 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |vb, override|
     override.trigger.after :up, :reload do |trigger|
       trigger.warn = <<-DOC
-        VirtualBox lacks support for advanced GPU features, so the following apps may not work:
-          - Kitty (Vbox only supports 2.1 GL drivers)
-          - Spotify (Needs GPU access)
+        VirtualBox lacks support for certain GPU features. For example, they only support 2.1 GL drivers
+        Here's some app they might not work and why:
+           - Kitty (Failed to create GLFWwindow)
+           - Alacritty (...error initializing the shaders...GLSL 3.30 is not supported)
       DOC
     end
   end
