@@ -4,8 +4,9 @@
   hosts: all
 
   roles:
-    - base
     - gnome-terminal
     - gtk
     - kitty
+    - neovim
+    - spicetify
     - vs_code

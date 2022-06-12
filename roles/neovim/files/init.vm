@@ -1,0 +1,7 @@
+""" Vim-Plug
+call plug#begin()
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+call plug#end()
+
+let g:catppuccin_flavour = "dusk" " latte, frappe, macchiato, mocha
+colorscheme catppuccin
