@@ -49,36 +49,47 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "gnome", type: "shell" do |shell|
     shell.inline = <<-SCRIPT
-      yum -y update
       yum makecache
+      yum -y update
       yum -y groupinstall gnome
       systemctl set-default graphical.target
     SCRIPT
-    # shell.reboot = true
   end
 
   config.vm.provision "prerequisites", type: "shell" do |shell|
     shell.inline = <<-SCRIPT
-      yum install -y ansible python3-psutil
+      yum install -y ansible python3-psutil cowsay
     SCRIPT
   end
 
-  config.vm.provision "catppuccin", type: "ansible_local" do |ansible|
+  config.vm.provision "base", type: "ansible_local" do |ansible|
+    ansible.playbook = "base.yml"
+  end
+
+  config.vm.provision "catppuccin", type: "ansible_local", run: "never" do |ansible|
     ansible.playbook = "provision.yml"
     # ansible.verbose = true
   end
 
-  config.vm.provision "reboot", type: "shell" do |shell|
-    shell.inline = "echo 'rebooting'"
-    shell.reboot = true
+  config.vm.provision "test", type: "ansible_local", run: "never" do |ansible|
+    ansible.playbook = "test.yml"
+    ansible.verbose = true
   end
 
-  config.vm.provision "test", type: "shell", run: "never" do |shell|
-    shell.inline = "flatpak run com.spotify.Client"
-    shell.privileged = false
+  # We need to reboot after install GNOME, but using shell provisioner causes the synced folder we rely
+  # on to disappear. Vagrant reload safely reboots the machine and keeps the folder.
+  config.trigger.after :up do |trigger|
+    trigger.info = "The machine is ready for catppuccin installs! Please run 'vagrant reload --provision-with catppuccin'."
   end
 
-  config.vm.provision "spicetify", type: "ansible_local", run: "never" do |ansible|
-    ansible.playbook = "spicetify.yml"
+  config.vm.provider :virtualbox do |vb, override|
+    override.trigger.after :up, :reload do |trigger|
+      trigger.warn = <<-DOC
+        VirtualBox lacks support for advanced GPU features, so the following apps may not work:
+          - Kitty (Vbox only supports 2.1 GL drivers)
+          - Spotify (Needs GPU access)
+      DOC
+    end
   end
+
 end

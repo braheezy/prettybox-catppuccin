@@ -13,18 +13,43 @@
     cmd: sh /tmp/spicetify-cli.sh
     creates: "{{ ansible_env.HOME}}/.spicetify/spicetify"
 
+# Not sure why it's like this, but we need to find the Spotify prefs location and tell spicetify about it
+- name: Look for Spotify prefs
+  stat:
+    path: "{{ ansible_env.HOME }}/.var/app/com.spotify.Client/config/spotify/prefs"
+  register: spotify_prefs_file
+
+- name: Power cycle Spotify to generate first-run files
+  block:
+
+    - name: start Spotify
+      become: no
+      shell: DISPLAY=:0 flatpak run com.spotify.Client
+      async: 10
+
+    - name: stop spotify
+      become: no
+      command: flatpak kill com.spotify.Client
+      ignore_errors: yes
+
+    - name: Look for Spotify prefs again
+      stat:
+        path: "{{ ansible_env.HOME }}/.var/app/com.spotify.Client/config/spotify/prefs"
+      register: spotify_prefs_file
+
+  when: not spotify_prefs_file.stat.exists
+
 - name: Generate default config-xpui.ini file
   command:
     cmd: "{{ ansible_env.HOME }}/.spicetify/spicetify config"
     creates: "{{ ansible_env.HOME }}/.config/spicetify/config-xpui.ini"
   ignore_errors: yes
 
-# Not sure why it's like this, but we need to find the Spotify prefs location and tell spicetify about it
 - name: Ensure prefs_path is set
   lineinfile:
     path: "{{ ansible_env.HOME }}/.config/spicetify/config-xpui.ini"
     regexp: 'prefs_path\s*='
-    line: prefs_path              = {{ ansible_env.HOME }}/.var/app/com.spotify.Client/config/spotify/prefs
+    line: prefs_path              = {{ spotify_prefs_file.stat.path }}
 
 - name: Open up permissions to Spotify (flatpak)
   become: yes

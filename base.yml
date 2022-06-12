@@ -1,0 +1,35 @@
+---
+
+- name: Configure base machine
+  hosts: all
+
+  tasks:
+
+    - name: Ensure packages for customization are installed
+      become: yes
+      yum:
+        name:
+          - gnome-tweaks
+          - gnome-extensions-app
+          - gnome-shell-extension-user-theme
+          - dconf-editor
+        state: present
+
+    - name: Ensure extensions are enabled
+      dconf:
+        key: "/org/gnome/shell/enabled-extensions"
+        value: "['user-theme@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']"
+        state: present
+
+    - name: Enable auto-login
+      become: yes
+      ini_file:
+        path: /etc/gdm/custom.conf
+        section: daemon
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        mode: 0644
+        backup: yes
+      loop:
+      - { option: AutomaticLoginEnable, value: "True"}
+      - { option: AutomaticLogin, value: "{{ ansible_user_id }}" }
