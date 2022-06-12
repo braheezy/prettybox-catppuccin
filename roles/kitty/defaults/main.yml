@@ -1,0 +1,4 @@
+---
+# Choose the catppuccin theme to use for kitty
+# Catppuccin-Latte, Catppuccin-Frappe, Catppuccin-Macchiato, Catppuccin-Mocha
+kitty_theme: Catppuccin-Macchiato

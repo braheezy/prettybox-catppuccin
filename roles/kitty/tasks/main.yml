@@ -6,10 +6,22 @@
     name: kitty
     state: present
 
-- name: Ensure kitty.conf exists
-  copy:
-    src: kitty.conf
-    dest: "{{ ansible_env.HOME }}/.config/kitty/"
+- name: Ensure kitty theme dir exists
+  file:
+    path: '{{ ansible_env.HOME }}/.config/kitty/themes'
+    state: directory
     mode: 0755
 
-# TODO: kitty dont run in VBox right now: https://github.com/kovidgoyal/kitty/issues/2536
+- name: Ensure all catppuccin themes exist
+  get_url:
+    url: https://raw.githubusercontent.com/catppuccin/kitty/main/{{ item }}
+    dest: "{{ ansible_env.HOME }}/.config/kitty/themes/"
+    mode: 0755
+  loop:
+    - frappe.conf
+    - latte.conf
+    - macchiato.conf
+    - mocha.conf
+
+- name: Set kitty theme
+  command: kitty +kitten themes --reload-in=all {{ kitty_theme }}
