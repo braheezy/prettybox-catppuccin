@@ -23,8 +23,8 @@
     # https://github.com/ansible/ansible/issues/54748
     extra_opts:
       - -j
-    # The files are unzipped so whatever
-    ignore_errors: true
+  # The files are unzipped so whatever
+  ignore_errors: true
 
 - name: Set wallpaper
   dconf:
