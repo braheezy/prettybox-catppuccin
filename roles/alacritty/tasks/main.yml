@@ -15,5 +15,5 @@
 - name: Ensure alacritty.yml exists
   get_url:
     url: https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin.yml
-    dest: "{{ ansible_env.HOME }}/.config/alacritty/"
+    dest: "{{ ansible_env.HOME }}/.config/alacritty/alacritty.yml"
     mode: 0755
