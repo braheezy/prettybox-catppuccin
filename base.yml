@@ -21,6 +21,12 @@
         value: "['user-theme@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']"
         state: present
 
+    - name: Disable screen turning off
+      dconf:
+        key: "/org/gnome/desktop/session/idle-delay"
+        value: "uint32 0"
+        state: present
+
     - name: Enable auto-login
       become: yes
       ini_file:
