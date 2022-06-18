@@ -22,7 +22,6 @@ Vagrant.configure("2") do |config|
 
     vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
 
-    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
     vb.customize ["modifyvm", :id, "--vram", "128"]
     vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
   end
@@ -66,31 +65,24 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "base.yml"
   end
 
-  config.vm.provision "catppuccin", type: "ansible_local", run: "never" do |ansible|
+  config.vm.provision "catppuccin", type: "ansible_local" do |ansible|
     ansible.playbook = "provision.yml"
-    ansible.verbose = true
-  end
-
-  config.vm.provision "test", type: "ansible_local", run: "never" do |ansible|
-    ansible.playbook = "test.yml"
     ansible.verbose = true
   end
 
   # We need to reboot after install GNOME, but using shell provisioner causes the synced folder we rely
   # on to disappear. Vagrant reload safely reboots the machine and keeps the folder.
   config.trigger.after :up do |trigger|
-    trigger.info = "The machine is ready for catppuccin installs! Please run 'vagrant reload --provision-with catppuccin'."
+    trigger.info = "The machine is ready for spicetify install. Please run 'vagrant reload --provision-with spice'."
   end
 
-  config.vm.provider :virtualbox do |vb, override|
-    override.trigger.after :up, :reload do |trigger|
-      trigger.warn = <<-DOC
-        VirtualBox lacks support for certain GPU features. For example, they only support 2.1 GL drivers
-        Here's some app they might not work and why:
-           - Kitty (Failed to create GLFWwindow)
-           - Alacritty (...error initializing the shaders...GLSL 3.30 is not supported)
-      DOC
-    end
+  config.vm.provision "spice", type: "ansible_local", run: "never" do |ansible|
+    ansible.playbook = "spicetify.yml"
+    ansible.verbose = true
+  end
+
+  config.vm.provision "dots", type: "ansible_local", run: "never" do |ansible|
+    ansible.playbook = "dotfiles.yml"
   end
 
 end
