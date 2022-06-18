@@ -5,10 +5,10 @@
 
   roles:
     - alacritty
+    - fonts
     - gnome-terminal
     - gtk
     - kitty
     - neovim
-    - spicetify
     - vs_code
     - wallpapers

@@ -1,0 +1,4 @@
+---
+
+- include_tasks: install_inter_font.yml
+  when: font == 'inter'

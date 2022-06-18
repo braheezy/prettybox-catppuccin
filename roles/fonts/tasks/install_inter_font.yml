@@ -1,0 +1,39 @@
+---
+
+- name: Check if fonts are installed
+  stat:
+    path: /usr/share/fonts/rsms-inter-fonts
+  register: font_folder
+
+- name: Install fonts
+  yum:
+    name:
+      - rsms-inter-fonts
+      # Per https://twitter.com/rsms/status/1158794169986371584
+      - google-roboto-mono-fonts
+    state: present
+  when: not font_folder.stat.isdir is defined or not font_folder.stat.isdir
+
+- name: Set font-name
+  dconf:
+    key: "/org/gnome/desktop/interface/font-name"
+    value: "'Inter 11'"
+    state: present
+
+- name: Set document-font-name
+  dconf:
+    key: "/org/gnome/desktop/interface/document-font-name"
+    value: "'Inter 11'"
+    state: present
+
+- name: Set monospace-font-name
+  dconf:
+    key: "/org/gnome/desktop/interface/monospace-font-name"
+    value: "'Roboto Mono 10'"
+    state: present
+
+- name: Set titlebar-font
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/titlebar-font"
+    value: "'Inter Bold 11'"
+    state: present
