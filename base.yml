@@ -5,6 +5,13 @@
 
   tasks:
 
+    - name: Ensure base packages are installed
+      become: yes
+      yum:
+        name:
+          - bat
+        state: present
+
     - name: Ensure packages for customization are installed
       become: yes
       yum:
