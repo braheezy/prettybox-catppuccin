@@ -1,0 +1,9 @@
+---
+# Name of Firefox profile that will be created
+profile_name: catppuccin
+
+# Config location for Firefox
+config_dir: '{{ ansible_env.HOME }}/.mozilla/firefox'
+
+# The specific Catppuccin theme to use
+theme_name: catppuccin-mocha-mauve
