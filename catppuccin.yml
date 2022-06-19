@@ -5,6 +5,7 @@
 
   roles:
     - alacritty
+    - firefox
     - fonts
     - gnome-terminal
     - gtk
