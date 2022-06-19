@@ -1,7 +1,0 @@
----
-
-- name: Install and configure a Spicetify for Spotify
-  hosts: all
-
-  roles:
-    - spicetify
