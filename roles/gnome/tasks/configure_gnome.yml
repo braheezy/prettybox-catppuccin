@@ -1,0 +1,47 @@
+---
+
+- name: Ensure packages for customization are installed
+  become: yes
+  yum:
+    name:
+      - gnome-tweaks
+      - gnome-extensions-app
+      - gnome-shell-extension-user-theme
+      - dconf-editor
+    state: present
+
+- name: Ensure minimize button is present
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/button-layout"
+    value: "'appmenu:minimize,close'"
+    state: present
+
+- name: Enable Focus on Hover for windows
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/focus-mode"
+    value: "'sloppy'"
+    state: present
+
+- name: Enable workspace switching for all monitors
+  dconf:
+    key: "/org/gnome/mutter/workspaces-only-on-primary"
+    value: "false"
+    state: present
+
+- name: Set favorite apps list
+  dconf:
+    key: "/org/gnome/shell/favorite-apps"
+    value: "['firefox.desktop', 'org.gnome.Nautilus.desktop', 'kitty.desktop']"
+    state: present
+
+- name: Ensure extensions are enabled
+  dconf:
+    key: "/org/gnome/shell/enabled-extensions"
+    value: "['user-theme@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']"
+    state: present
+
+- name: Disable screen turning off
+  dconf:
+    key: "/org/gnome/desktop/session/idle-delay"
+    value: "uint32 0"
+    state: present

@@ -1,0 +1,12 @@
+---
+
+- name: Ensure GNOME Desktop is installed
+  become: yes
+  yum:
+    name: "@GNOME"
+    state: present
+
+  # Opinionated
+- import_tasks: configure_gnome.yml
+
+- import_tasks: clean_gnome.yml
