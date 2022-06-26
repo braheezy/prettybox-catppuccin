@@ -1,3 +1,5 @@
 ---
 # Name of font to install
-font: inter
+# default: Leave fonts as system defaults
+# inter: Install Inter fonts
+font: default
