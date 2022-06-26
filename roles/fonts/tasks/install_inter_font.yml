@@ -6,6 +6,7 @@
   register: font_folder
 
 - name: Install fonts
+  become: yes
   yum:
     name:
       - rsms-inter-fonts

@@ -24,7 +24,9 @@
 
     - name: start Spotify
       become: no
-      shell: DISPLAY=:0 flatpak run com.spotify.Client
+      environment:
+        DISPLAY: :0
+      shell: flatpak run com.spotify.Client
       async: 10
 
     - name: stop spotify
