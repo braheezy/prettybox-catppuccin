@@ -23,5 +23,8 @@
     - macchiato.conf
     - mocha.conf
 
-- name: Set kitty theme
-  command: kitty +kitten themes --reload-in=all {{ kitty_theme }}
+- name: Ensure kitty.conf exists
+  template:
+    src: kitty.conf.j2
+    dest: "{{ ansible_env.HOME }}/.config/kitty/kitty.conf"
+    mode: 0755
