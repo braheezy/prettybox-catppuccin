@@ -1,39 +1,24 @@
 ---
-
+# Non-catppuccin stuff goes here
 - name: Configure base machine
   hosts: all
 
   tasks:
 
-    - name: Ensure base packages are installed
+    - name: Run yum update
+      become: yes
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Ensure extra (cool) packages are installed
       become: yes
       yum:
         name:
           - bat
         state: present
 
-    - name: Ensure packages for customization are installed
-      become: yes
-      yum:
-        name:
-          - gnome-tweaks
-          - gnome-extensions-app
-          - gnome-shell-extension-user-theme
-          - dconf-editor
-        state: present
-
-    - name: Ensure extensions are enabled
-      dconf:
-        key: "/org/gnome/shell/enabled-extensions"
-        value: "['user-theme@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']"
-        state: present
-
-    - name: Disable screen turning off
-      dconf:
-        key: "/org/gnome/desktop/session/idle-delay"
-        value: "uint32 0"
-        state: present
-
+    # We need this on for other GUI-based installs to work later.
     - name: Enable auto-login
       become: yes
       ini_file:

@@ -3,13 +3,32 @@
 - name: Install and configure a bunch of Catppuccin ports
   hosts: all
 
-  roles:
-    - alacritty
-    - firefox
-    - fonts
-    - gnome-terminal
-    - gtk
-    - kitty
-    - neovim
-    - vs_code
-    - wallpapers
+  tasks:
+
+    # Install desktop first
+    - import_role:
+        name: gnome
+      when: desktop == 'gnome'
+
+    - name: Set default target to desktop
+      become: yes
+      command: systemctl set-default graphical.target
+
+    # Install and configure ports
+    - import_role:
+        name: alacritty
+    - import_role:
+        name: fonts
+    - import_role:
+        name: gnome-terminal
+      when: desktop == 'gnome'
+    - import_role:
+        name: gtk
+    - import_role:
+        name: kitty
+    - import_role:
+        name: neovim
+    - import_role:
+        name: vs_code
+    - import_role:
+        name: wallpapers

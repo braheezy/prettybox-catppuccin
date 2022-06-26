@@ -32,6 +32,8 @@ Vagrant.configure("2") do |config|
     l.memory = MEMORY
     l.disk_bus = "virtio"
 
+    l.default_prefix = ""
+
     l.video_type = 'qxl'
     l.graphics_type = "spice"
     l.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
@@ -44,15 +46,6 @@ Vagrant.configure("2") do |config|
     l.hyperv_feature :name => 'synic',   :state => 'on'
     l.hyperv_feature :name => 'vapic',   :state => 'on'
     l.hyperv_feature :name => 'vpindex', :state => 'on'
-  end
-
-  config.vm.provision "gnome", type: "shell" do |shell|
-    shell.inline = <<-SCRIPT
-      yum makecache
-      yum -y update
-      yum -y groupinstall gnome
-      systemctl set-default graphical.target
-    SCRIPT
   end
 
   config.vm.provision "prerequisites", type: "shell" do |shell|
@@ -68,6 +61,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "catppuccin", type: "ansible_local" do |ansible|
     ansible.playbook = "catppuccin.yml"
+    ansible.extra_vars = {
+      desktop: "gnome"
+    }
     ansible.verbose = true
   end
 
@@ -80,7 +76,7 @@ Vagrant.configure("2") do |config|
   # For one reason or another, these apps installs need an actively running graphical session.
   config.vm.provision "gui-cats", type: "ansible_local", run: "never" do |ansible|
     ansible.playbook = "gui_cats.yml"
-    ansible.verbose = true
+    # ansible.verbose = true
   end
 
   config.vm.provision "dots", type: "ansible_local", run: "never" do |ansible|
