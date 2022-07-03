@@ -1,17 +1,17 @@
-source "vagrant" "lv" {
+source "vagrant" "qemu" {
   communicator = "ssh"
   source_path = "generic/fedora35"
   provider = "libvirt"
 }
 
-source "vagrant" "vb" {
+source "vagrant" "vbox" {
   communicator = "ssh"
   source_path = "generic/fedora35"
   provider = "virtualbox"
 }
 
 build {
-  sources = ["source.vagrant.lv", "source.vagrant.vb"]
+  sources = ["source.vagrant.qemu", "source.vagrant.vbox"]
 
   # Required for ansible-local provisioners
   provisioner "shell" {
@@ -21,8 +21,8 @@ build {
 
   # Do bulk of provisioning
   provisioner "ansible-local" {
-    playbook_files = ["base.yml", "catppuccin.yml"]
-    playbook_dir = "roles"
+    playbook_files = ["ansible/base.yml", "ansible/catppuccin.yml"]
+    playbook_dir = "ansible"
     command = var.ansible_command
     extra_arguments = [
       "--extra-vars", "ansible_python_interpreter=/usr/bin/python3",
@@ -40,14 +40,13 @@ build {
   # These need an active GUI session running to work, which
   # is true after the reboot above.
   provisioner "ansible-local" {
-    playbook_file = "gui_cats.yml"
+    playbook_file = "ansible/gui_cats.yml"
     command = var.ansible_command
-    playbook_dir = "roles"
+    playbook_dir = "ansible"
     extra_arguments = [
       "--extra-vars", "ansible_python_interpreter=/usr/bin/python3"
     ]
   }
-
 }
 
 variable "desktop" {
