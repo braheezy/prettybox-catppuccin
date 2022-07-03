@@ -6,12 +6,14 @@ MEMORY = 4096
 NAME = "catppuccin-f35"
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/fedora35"
+  config.vm.box = "f35"
 
   config.vm.define NAME
   config.vm.hostname = NAME
 
   config.vm.provider :virtualbox do |vb, override|
+    override.vm.box_url = "#{__dir__}/output-vb/package.box"
+
     vb.name = NAME
     vb.cpus = CPUS
     vb.memory = MEMORY
@@ -23,10 +25,12 @@ Vagrant.configure("2") do |config|
     vb.customize ["modifyvm", :id, "--clipboard-mode", "bidirectional"]
 
     vb.customize ["modifyvm", :id, "--vram", "128"]
-    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vboxsvga"]
   end
 
   config.vm.provider :libvirt do |l, override|
+    override.vm.box_url = "#{__dir__}/output-lv/package.box"
+
     l.driver = "kvm"
     l.cpus = CPUS
     l.memory = MEMORY
@@ -46,37 +50,6 @@ Vagrant.configure("2") do |config|
     l.hyperv_feature :name => 'synic',   :state => 'on'
     l.hyperv_feature :name => 'vapic',   :state => 'on'
     l.hyperv_feature :name => 'vpindex', :state => 'on'
-  end
-
-  config.vm.provision "prerequisites", type: "shell" do |shell|
-    shell.inline = <<-SCRIPT
-      yum install -y ansible python3-psutil cowsay
-      ansible-galaxy collection install community.general
-    SCRIPT
-  end
-
-  config.vm.provision "base", type: "ansible_local" do |ansible|
-    ansible.playbook = "base.yml"
-  end
-
-  config.vm.provision "catppuccin", type: "ansible_local" do |ansible|
-    ansible.playbook = "catppuccin.yml"
-    ansible.extra_vars = {
-      desktop: "gnome"
-    }
-    ansible.verbose = true
-  end
-
-  # We need to reboot after install GNOME, but using shell provisioner causes the synced folder we rely
-  # on to disappear. Vagrant reload safely reboots the machine and keeps the folder.
-  config.trigger.after :up do |trigger|
-    trigger.info = "The machine is ready for GUI installs. Please run 'vagrant reload --provision-with gui-cats'."
-  end
-
-  # For one reason or another, these apps installs need an actively running graphical session.
-  config.vm.provision "gui-cats", type: "ansible_local", run: "never" do |ansible|
-    ansible.playbook = "gui_cats.yml"
-    # ansible.verbose = true
   end
 
   config.vm.provision "dots", type: "ansible_local", run: "never" do |ansible|
