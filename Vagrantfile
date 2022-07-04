@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
     l.default_prefix = ""
 
     l.video_type = 'qxl'
+    l.sound_type = 'ich9'
     l.graphics_type = "spice"
     l.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
 
