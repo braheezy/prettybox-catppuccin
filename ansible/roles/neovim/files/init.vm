@@ -3,5 +3,5 @@ call plug#begin()
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 call plug#end()
 
-let g:catppuccin_flavour = "dusk" " latte, frappe, macchiato, mocha
+let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
 colorscheme catppuccin
