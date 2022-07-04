@@ -16,6 +16,7 @@
       yum:
         name:
           - bat
+          - spice-vdagent
         state: present
 
     # We need this on for other GUI-based installs to work later.
