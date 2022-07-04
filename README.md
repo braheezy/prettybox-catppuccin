@@ -3,7 +3,39 @@ This project provides a provisioned VM to show off various [Catppuccin](https://
 
 [Packer](https://www.packer.io/) is used to create the images and [Ansible](https://docs.ansible.com/ansible/latest/index.html) does most of the provisioning. [Vagrant](https://www.vagrantup.com/docs) boxes are produced at the end to make using the VMs easy. To use the VMs, you'll need a hypervisor. This projects aims to support [VirtualBox](https://www.oracle.com/virtualization/virtualbox/) and [QEMU with Libvirt](https://unix.stackexchange.com/questions/486301/whats-the-difference-between-kvm-qemu-and-libvirt).
 
-Basically, each port/tool/app is installed and the Catppuccin theme is applied to it per the theme's instructions. If I use the port in my daily life, it's slightly opinionated, otherwise everything is on default settings. The `Macchiato` flavor is used.
+Basically, each port/tool/app is installed and the Catppuccin theme is applied to it per the theme's instructions. If I use the port in my daily life, the configuration might be opinionated.
+
+The following apps/ports are installed:
+- [Alacritty](https://github.com/catppuccin/alacritty)
+  - Default Flavor: `Macchiato`
+  - Change in `alacritty.yml`
+- [Firefox](https://github.com/catppuccin/firefox)
+   - Default Flavor: `Mocha`
+   - Use Firefox extension marketplace to change
+- Fonts
+  - Default: System font
+  - Change `ansible/roles/fonts/defaults/main.yml` to pick different fonts
+  - Supported fonts: `inter`
+- GNOME
+  - Install and enable the GNOME desktop
+- [Gnome-terminal](https://github.com/catppuccin/gnome-terminal)
+  - No choice in flavor
+- [GTK](https://github.com/catppuccin/gtk)
+  - Default flavor: Purple
+  - Change by installing [RPM](https://github.com/braheezy/catppuccin-gtk-rpm) and update in `gnome-tweaks`
+- [Kitty](https://github.com/catppuccin/kitty)
+  - Default flavor: `Macchiato`
+  - Change in `kitty.conf`
+- [Nvim](https://github.com/catppuccin/nvim)
+  - Default flavor: `Macchiato`
+  - Managed by `vim-plug` and set in `init.vm`
+- [Spotify (handled by Spicetify)](https://github.com/catppuccin/spicetify)
+  - No choice in flavor
+- [VS Code](https://github.com/catppuccin/vscode)
+  - Default flavor: Dark
+- [Wallpapers](https://github.com/catppuccin/wallpapers)
+  - Default: `evening-sky.png`
+  - Change in `gnome-tweaks`
 
 # Build
 Until the Vagrant boxes are publicly available for download, they'll need to be built locally first. That means installing build tools and a hypervisor.
