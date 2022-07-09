@@ -33,7 +33,8 @@ build {
   provisioner "shell" {
     inline = ["sudo reboot"]
     expect_disconnect = true
-    pause_before = "20s"
+    pause_before = "10s"
+    pause_after = "20s"
     start_retry_timeout = "10m"
   }
 
