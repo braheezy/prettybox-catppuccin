@@ -11,7 +11,7 @@ The following apps/ports are installed:
   - Change in `alacritty.yml`
 - [Cursors](https://github.com/catppuccin/cursors)
   - Default Flavor: `Macchiato-Mauve`
-  - Change in settings
+  - Change in Settings
 - [Firefox](https://github.com/catppuccin/firefox)
    - Default Flavor: `Mocha`
    - Use Firefox extension marketplace to change
@@ -25,7 +25,7 @@ The following apps/ports are installed:
   - No choice in flavor
 - [GTK](https://github.com/catppuccin/gtk)
   - Default flavor: Purple
-  - Change by installing [RPM](https://github.com/braheezy/catppuccin-gtk-rpm) and update in `gnome-tweaks`
+  - Change by installing [RPM](https://github.com/braheezy/catppuccin-gtk-rpm) and update in Settings
 - [Kitty](https://github.com/catppuccin/kitty)
   - Default flavor: `Macchiato`
   - Change in `kitty.conf`
@@ -35,10 +35,10 @@ The following apps/ports are installed:
 - [Spotify (handled by Spicetify)](https://github.com/catppuccin/spicetify)
   - No choice in flavor
 - [VS Code](https://github.com/catppuccin/vscode)
-  - Default flavor: Dark
+  - No choice in flavor
 - [Wallpapers](https://github.com/catppuccin/wallpapers)
   - Default: `evening-sky.png`
-  - Change in `gnome-tweaks`
+  - Change in Settings
 
 # Build
 Until the Vagrant boxes are publicly available for download, they'll need to be built locally first. That means installing build tools and a hypervisor.
@@ -65,18 +65,19 @@ After a successful build, Vagrant can be used to launch the VM.
 
 
 # Why?
-I like automating things and I like Catppuccin. I was already using several ports and had automated the setup of them so I figured I start throwing them all in single machine.
+I like automating things and I like Catppuccin. I was already using several ports and had automated the setup of them so I figured I should start throwing them all in single machine.
 
 Port/theme maintainers might like this project as a test platform.
 
 Port/theme users might like this project to test drive ports before installing.
 
 # Future Work
-In order to run more ports, there needs to be support for different types configured machines:
+In order to run more ports, there needs to be support for different types of machines:
 - More OSes:
   - Debian
   - Windows
   - ???
 - More desktops:
   - KDE
+  - XFCE
   - ???
