@@ -9,6 +9,9 @@ The following apps/ports are installed:
 - [Alacritty](https://github.com/catppuccin/alacritty)
   - Default Flavor: `Macchiato`
   - Change in `alacritty.yml`
+- [Cursors](https://github.com/catppuccin/cursors)
+  - Default Flavor: `Macchiato-Mauve`
+  - Change in settings
 - [Firefox](https://github.com/catppuccin/firefox)
    - Default Flavor: `Mocha`
    - Use Firefox extension marketplace to change
@@ -50,6 +53,10 @@ Once everything is installed and you can run VMs, the Packer build command will 
 
     packer build -only=*.qemu template.pkr.hcl
     packer build -only=*.vbox template.pkr.hcl
+
+Or build them all:
+
+    packer build -parallel-builds=1 template.pkr.hcl
 
 # Usage
 After a successful build, Vagrant can be used to launch the VM.
