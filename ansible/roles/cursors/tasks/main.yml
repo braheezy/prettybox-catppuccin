@@ -1,0 +1,17 @@
+---
+
+- name: Install cursors
+  become: yes
+  unarchive:
+    src: https://github.com/catppuccin/cursors/raw/main/cursors/Catppuccin-{{ cursor_color }}-Cursors.zip
+    dest: /usr/share/icons
+    remote_src: yes
+
+- name: Configure cursors in settings
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+    - { key: "/org/gnome/desktop/interface/cursor-size", value: "32" }
+    - { key: "/org/gnome/desktop/interface/cursor-theme", value: "'Catppuccin-{{ cursor_color }}-Cursors'" }

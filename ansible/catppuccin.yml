@@ -1,7 +1,8 @@
 ---
 
 - name: Install and configure a bunch of Catppuccin ports
-  hosts: all
+  hosts: localhost
+  connection: local
 
   tasks:
 
@@ -17,6 +18,8 @@
     # Install and configure ports
     - import_role:
         name: alacritty
+    - import_role:
+        name: cursors
     - import_role:
         name: fonts
     - import_role:
