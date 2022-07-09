@@ -1,13 +1,33 @@
 ---
 
-- name: Install cursors
-  become: yes
+- name: Download cursor source
+  get_url:
+    url: https://github.com/catppuccin/cursors/archive/refs/heads/main.zip
+    dest: /tmp
+
+- name: Unpack cursor source
   unarchive:
-    src: https://github.com/catppuccin/cursors/raw/main/cursors/Catppuccin-{{ cursor_color }}-Cursors.zip
-    dest: /usr/share/icons
+    src: /tmp/cursors-main.zip
+    dest: /tmp/
     remote_src: yes
 
-- name: Configure cursors in settings
+- name: Record all cursor zip files
+  find:
+    paths: /tmp/cursors-main/cursors
+    patterns: "*.zip"
+  register: cursor_zips
+
+- name: Unpack all cursors
+  become: yes
+  unarchive:
+    src: "{{ item.path }}"
+    dest: /usr/share/icons
+    remote_src: yes
+  loop: "{{ cursor_zips.files }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Configure a default cursor in settings
   dconf:
     key: "{{ item.key }}"
     value: "{{ item.value }}"
