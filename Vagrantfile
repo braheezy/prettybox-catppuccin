@@ -43,7 +43,9 @@ Vagrant.configure("2") do |config|
     l.graphics_type = "spice"
     l.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
 
-    override.vm.synced_folder "./", "/vagrant", disabled: true
+    l.memorybacking :source, :type => "memfd"
+    l.memorybacking :access, :mode => "shared"
+    override.vm.synced_folder ".", "/vagrant", disabled: false, type: "virtiofs"
 
     # Enable Hyper-V enlightments: https://blog.wikichoon.com/2014/07/enabling-hyper-v-enlightenments-with-kvm.html
     l.hyperv_feature :name => 'relaxed', :state => 'on'
