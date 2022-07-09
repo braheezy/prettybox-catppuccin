@@ -64,6 +64,10 @@ After a successful build, Vagrant can be used to launch the VM.
     vagrant up
 
 
+# Known Issues
+- **VirtualBox**
+  - I think it's a bug with Fedora but the session in VirtualBox will often freeze and "reset", especially when moving windows around quickly. The behavior seems a bit better if X11 is used instead of Wayland, which can be set at the greeter when logging in.
+
 # Why?
 I like automating things and I like Catppuccin. I was already using several ports and had automated the setup of them so I figured I should start throwing them all in single machine.
 
