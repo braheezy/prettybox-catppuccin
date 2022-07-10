@@ -41,28 +41,25 @@ The following apps/ports are installed:
   - Change in Settings
 
 # Build
-Until the Vagrant boxes are publicly available for download, they'll need to be built locally first. That means installing build tools and a hypervisor.
-
 For your distro, install the following:
 - Packer
 - VirtualBox or QEMU/Libvirt support
 - Vagrant
   - If using QEMU/Libvirt, you'll need the [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt) plugin too.
+- To upload to Vagrant Cloud, a `VAGRANT_CLOUD_TOKEN` is needed. Create an account on Vagrant Cloud to get one.
 
-Once everything is installed and you can run VMs, the Packer build command will create the Vagrant boxes. Use the `-only` flag to pick the target you want to build:
+Once everything is installed and you can run VMs, use `make` to start the build:
 
-    packer build -only=*.qemu template.pkr.hcl
-    packer build -only=*.vbox template.pkr.hcl
+    export VAGRANT_CLOUD_TOKEN=<your access token>  # Optional
+    make qemu   # Create the VirtualBox machine
+    make vbox   # Create the QEMU/Libvirt machine
+    make all    # Create all the machines
 
-Or build them all:
-
-    packer build -parallel-builds=1 template.pkr.hcl
 
 # Usage
 After a successful build, Vagrant can be used to launch the VM.
 
     vagrant up
-
 
 # Known Issues
 - **VirtualBox**
