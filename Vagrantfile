@@ -8,7 +8,7 @@ MEMORY = 4096
 NAME = "catppuccin-f35"
 
 # If local boxes were built using Packer, toggle this to TRUE.
-USE_LOCAL_BOXES = TRUE
+USE_LOCAL_BOXES = false
 
 Vagrant.configure("2") do |config|
   config.vm.box = NAME
@@ -17,7 +17,12 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = NAME
 
   config.vm.provider :virtualbox do |vb, override|
-    override.vm.box_url = USE_LOCAL_BOXES ? "#{__dir__}/output-vbox/package.box" : nil
+    if USE_LOCAL_BOXES
+      override.vm.box_url =  "#{__dir__}/output-vbox/package.box"
+      override.vm.box = NAME
+    else
+      override.vm.box = "braheezy/#{NAME}"
+    end
 
     vb.name = NAME
     vb.cpus = CPUS
@@ -36,7 +41,12 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provider :libvirt do |l, override|
-    override.vm.box_url = USE_LOCAL_BOXES ? "#{__dir__}/output-qemu/package.box" : nil
+    if USE_LOCAL_BOXES
+      override.vm.box_url =  "#{__dir__}/output-qemu/package.box"
+      override.vm.box = NAME
+    else
+      override.vm.box = "braheezy/#{NAME}"
+    end
 
     l.driver = "kvm"
     l.cpus = CPUS
