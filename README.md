@@ -40,6 +40,21 @@ The following apps/ports are installed:
   - Default: `evening-sky.png`
   - Change in Settings
 
+# Usage
+For your distro, install the following:
+- VirtualBox or QEMU/Libvirt support
+- Vagrant
+  - If using QEMU/Libvirt, you'll need the [vagrant-libvirt](https://github.com/vagrant-libvirt/vagrant-libvirt) plugin too.
+
+Next, clone this project or download the Vagrantfile.
+
+Finally, use `vagrant` to run the machine for the hypervisor you have installed:
+
+    vagrant up --provider virtualbox
+Or
+
+    vagrant up --provider libvirt
+
 # Build
 For your distro, install the following:
 - Packer
@@ -54,12 +69,6 @@ Once everything is installed and you can run VMs, use `make` to start the build:
     make qemu   # Create the VirtualBox machine
     make vbox   # Create the QEMU/Libvirt machine
     make all    # Create all the machines
-
-
-# Usage
-After a successful build, Vagrant can be used to launch the VM.
-
-    vagrant up
 
 # Known Issues
 - **VirtualBox**
