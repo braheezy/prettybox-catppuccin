@@ -48,6 +48,13 @@ build {
       "--extra-vars", "ansible_python_interpreter=/usr/bin/python3"
     ]
   }
+
+  post-processor "vagrant-cloud" {
+    box_tag = "braheezy/catppuccin-f35"
+    version = var.version
+    access_token = "${var.cloud_token}"
+  }
+
 }
 
 variable "desktop" {
@@ -69,4 +76,15 @@ variable "iso_checksum" {
 variable "ansible_command" {
   type = string
   default = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 ANSIBLE_COW_SELECTION=hellokitty ansible-playbook"
+}
+
+variable "cloud_token" {
+  type    = string
+  default = "${env("VAGRANT_CLOUD_TOKEN")}"
+  sensitive = true
+}
+
+variable "version" {
+  type = string
+  default = "0"
 }
