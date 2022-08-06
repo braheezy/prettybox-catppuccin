@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -eou pipefail
+
+VAGRANT_VERSION=2.2.19
+VIRTUALBOX_VERSION=6.1.36
+
+# Update stuffs
+apt update -y
+
+apt install -y wget unzip
+
+# Install Vagrant
+wget https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_$VAGRANT_VERSION_linux_amd64.zip
+unzip vagrant_$VAGRANT_VERSION_linux_amd64.zip -d /usr/bin
+echo "$(vagrant -v)"
+
+# Install VirtualBox
+wget https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VERSION/virtualbox-6.1_$VIRTUALBOX_VERSION-152435~Ubuntu~focal_amd64.deb
+apt install -y ./virtualbox-6.1_$VIRTUALBOX_VERSION-152435~Ubuntu~focal_amd64.deb
+echo "$(vboxmanage -v)"
