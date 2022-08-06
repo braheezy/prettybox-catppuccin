@@ -1,0 +1,22 @@
+name: Deploy Vagrant boxes
+
+on:
+  # Only deploy on new tags
+  push:
+    tags: "^(0|[1-9]\d*)\.\d*\..*"
+
+env:
+  PKR_VAR_version: "{{ github.ref_name }}"
+
+jobs:
+  # Call the build workflow
+  build:
+    uses: ./.github/workflows/build.yml
+
+  deploy:
+    # Only deploy if build succeeds
+    needs: build
+
+    runs-on: ubuntu-latest
+    steps:
+      - name:

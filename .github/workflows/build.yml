@@ -1,0 +1,47 @@
+name: Packer Build
+
+on:
+  # Let other workflows call this workflow
+  workflow_call:
+  # Run on pull requests too
+  pull_request:
+    types:
+      - ready_for_review
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel previous runs
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Install build deps
+        run: sudo sh ./configure
+
+      # As recommended by the Packer Github Action, run a bunch of pre-checks
+      - name: Fix any backwards incompatibilities in template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: fix
+
+      - name: Validate template syntax
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: --syntax-only
+          target: template.pkr.hcl
+
+      - name: Build artifacts
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build Virtualbox
+          arguments: "-color=false -on-error=abort -only=vagrant.vbox"
+          target: template.pkr.hcl
+        env:
+          PACKER_LOG: 1
