@@ -49,11 +49,6 @@ build {
     ]
   }
 
-  post-processor "vagrant-cloud" {
-    box_tag = "braheezy/catppuccin-f35"
-    version = var.version
-  }
-
 }
 
 variable "desktop" {
@@ -75,9 +70,4 @@ variable "iso_checksum" {
 variable "ansible_command" {
   type = string
   default = "ANSIBLE_FORCE_COLOR=1 PYTHONUNBUFFERED=1 ANSIBLE_COW_SELECTION=hellokitty ansible-playbook"
-}
-
-variable "version" {
-  type = string
-  default = "0"
 }
