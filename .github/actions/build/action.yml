@@ -8,11 +8,6 @@ runs:
       shell: bash
 
     # As recommended by the Packer Github Action, run a bunch of pre-checks
-    - name: Fix any backwards incompatibilities in template
-      uses: hashicorp/packer-github-actions@master
-      with:
-        command: fix
-
     - name: Validate template syntax
       uses: hashicorp/packer-github-actions@master
       with:
