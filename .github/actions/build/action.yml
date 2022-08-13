@@ -16,10 +16,7 @@ runs:
         target: template.pkr.hcl
 
     - name: Build artifacts
-      uses: hashicorp/packer-github-actions@master
-      with:
-        command: build
-        arguments: "-color=false -on-error=abort -only=vagrant.vbox"
-        target: template.pkr.hcl
+      run: make vbox
       env:
         PACKER_LOG: 1
+        CI: 1
