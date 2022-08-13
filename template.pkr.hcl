@@ -8,6 +8,7 @@ source "vagrant" "vbox" {
   communicator = "ssh"
   source_path = "generic/fedora35"
   provider = "virtualbox"
+  vagrantfile_template = "Vagranfile_build_template"
 }
 
 build {
