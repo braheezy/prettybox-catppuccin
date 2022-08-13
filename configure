@@ -9,7 +9,8 @@ apt update -y
 apt install -y wget unzip
 
 # Install Vagrant
-apt install -y https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_$VAGRANT_VERSION_x86_64.deb
+wget https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_$VAGRANT_VERSION_x86_64.deb
+apt install -y vagrant_$VAGRANT_VERSION_x86_64.deb
 vagrant -v || exit 1
 
 # Install VirtualBox
