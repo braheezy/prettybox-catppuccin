@@ -17,6 +17,7 @@ runs:
 
     - name: Build artifacts
       run: make vbox
+      shell: bash
       env:
         PACKER_LOG: 1
         CI: 1
