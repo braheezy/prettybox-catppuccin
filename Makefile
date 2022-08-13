@@ -3,7 +3,7 @@ VERSION         := 0.1.1
 ROOT_DIR        := $(shell pwd)
 PACKER_BIN      := /usr/bin/packer
 PACKER_TEMPLATE := $(ROOT_DIR)/template.pkr.hcl
-PACKER_ARGS     := ""
+PACKER_ARGS     := "-force"
 ifndef CI
 PACKER_ARGS     += "-color=false -on-error=abort"
 endif
@@ -42,11 +42,11 @@ qemu: $(QEMU_OUTPUT)
 
 $(VBOX_OUTPUT): $(PACKER_TEMPLATE)
 	@echo -e "${GREEN}Starting build for vbox!${END}"
-	$(PACKER_BIN) build -force -only=vagrant.vbox $(PACKER_ARGS) $(PACKER_TEMPLATE)
+	$(PACKER_BIN) build -only=vagrant.vbox $(PACKER_ARGS) $(PACKER_TEMPLATE)
 
 $(QEMU_OUTPUT): $(PACKER_TEMPLATE)
 	@echo -e "${GREEN}Starting build for qemu!${END}"
-	$(PACKER_BIN) build -force -only=vagrant.qemu $(PACKER_ARGS) $(PACKER_TEMPLATE)
+	$(PACKER_BIN) build -only=vagrant.qemu $(PACKER_ARGS) $(PACKER_TEMPLATE)
 
 export ATLAS_TOKEN=$(VAGRANT_CLOUD_TOKEN)
 upload-vbox: check-token $(VBOX_OUTPUT)
