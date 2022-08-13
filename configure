@@ -9,11 +9,11 @@ apt update -y
 apt install -y wget unzip
 
 # Install Vagrant
-wget https://releases.hashicorp.com/vagrant/$VAGRANT_VERSION/vagrant_$VAGRANT_VERSION_linux_amd64.zip
+wget https://releases.hashicorp.com/vagrant/vagrant_$VAGRANT_VERSION/vagrant_$VAGRANT_VERSION_linux_amd64.zip
 unzip vagrant_$VAGRANT_VERSION_linux_amd64.zip -d /usr/bin
-echo "$(vagrant -v)"
+vagrant -v || exit 1
 
 # Install VirtualBox
 wget https://download.virtualbox.org/virtualbox/$VIRTUALBOX_VERSION/virtualbox-6.1_$VIRTUALBOX_VERSION-152435~Ubuntu~focal_amd64.deb
 apt install -y ./virtualbox-6.1_$VIRTUALBOX_VERSION-152435~Ubuntu~focal_amd64.deb
-echo "$(vboxmanage -v)"
+vboxmanage -v || exit 1
