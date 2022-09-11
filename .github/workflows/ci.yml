@@ -1,10 +1,6 @@
 name: ci
 
-on:
-  pull_request:
-    types:
-      - synchronize
-      - opened
+on: push
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -13,10 +9,24 @@ concurrency:
 
 jobs:
 
-  build:
+  packer-lint:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/build
+      - uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: template.pkr.hcl
+
+  ansible-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - use: actions/checkout@v3
+
+      - uses: ansible-community/ansible-lint-action@main
+        with:
+          path: base.yml roles/*
