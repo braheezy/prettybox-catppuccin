@@ -7,8 +7,8 @@ PACKER_ARGS     := "-force"
 ifndef CI
 PACKER_ARGS     += "-color=false -on-error=abort"
 endif
-VBOX_OUTPUT     := $(ROOT_DIR)/output-vbox/package.box
-QEMU_OUTPUT     := $(ROOT_DIR)/output-qemu/package.box
+VBOX_OUTPUT     := $(ROOT_DIR)/vbox/package.box
+QEMU_OUTPUT     := $(ROOT_DIR)/qemu/package.box
 
 ORANGE = \e[0;33m
 GREEN = \e[0;32m
