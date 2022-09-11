@@ -32,3 +32,5 @@
       loop:
       - { option: AutomaticLoginEnable, value: "True"}
       - { option: AutomaticLogin, value: "{{ ansible_user_id }}" }
+
+    - import_tasks: catppuccin.yml
