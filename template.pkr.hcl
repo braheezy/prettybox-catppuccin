@@ -1,10 +1,12 @@
 source "vagrant" "qemu" {
+  communicator = "ssh"
   source_path = "generic/fedora35"
   provider = "libvirt"
   output_dir = "qemu"
 }
 
 source "vagrant" "vbox" {
+  communicator = "ssh"
   source_path = "generic/fedora35"
   provider = "virtualbox"
   output_dir = "vbox"
