@@ -29,4 +29,8 @@ jobs:
 
       - uses: ansible-community/ansible-lint-action@main
         with:
-          path: base.yml roles/*
+          path: base.yml
+
+      - uses: ansible-community/ansible-lint-action@main
+        with:
+          path: roles
