@@ -1,8 +1,0 @@
----
-
-- name: Install and configure apps that need a graphics session
-  hosts: all
-
-  roles:
-    - firefox
-    - spicetify

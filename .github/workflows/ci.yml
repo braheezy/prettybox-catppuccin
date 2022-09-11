@@ -1,0 +1,36 @@
+name: ci
+
+on: push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel previous runs
+  cancel-in-progress: true
+
+jobs:
+
+  packer-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: template.pkr.hcl
+
+  ansible-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: ansible-community/ansible-lint-action@main
+        with:
+          path: base.yml
+
+      - uses: ansible-community/ansible-lint-action@main
+        with:
+          path: roles

@@ -17,6 +17,10 @@
         name:
           - bat
           - spice-vdagent
+          - ripgrep
+          - exa
+          - duf
+          - fd
         state: present
 
     # We need this on for other GUI-based installs to work later.
@@ -32,3 +36,5 @@
       loop:
       - { option: AutomaticLoginEnable, value: "True"}
       - { option: AutomaticLogin, value: "{{ ansible_user_id }}" }
+
+    - import_tasks: catppuccin.yml

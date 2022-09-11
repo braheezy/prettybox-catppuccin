@@ -66,7 +66,7 @@ Vagrant.configure("2") do |config|
     # Libvirt shared folders. This requires fairly modern versions of Linux.
     l.memorybacking :source, :type => "memfd"
     l.memorybacking :access, :mode => "shared"
-    override.vm.synced_folder ".", "/vagrant", type: "virtiofs", disabled: true
+    override.vm.synced_folder "~/catppuccin-gtk-rpm/", "/vagrant", type: "rsync", disabled: false
 
     # Enable Hyper-V enlightments: https://blog.wikichoon.com/2014/07/enabling-hyper-v-enlightenments-with-kvm.html
     l.hyperv_feature :name => 'relaxed', :state => 'on'
