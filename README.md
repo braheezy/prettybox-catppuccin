@@ -56,7 +56,7 @@ Or
     vagrant up --provider libvirt
 
 # Demos
-Here are quick peeks into how some of the ports look. To be honest, some things don't look as good as they might on a host machine and I believe it's either 1) a virtualization penalty in the graphics rendering 2) Wayland. But then some apps look worse on X11 so you can't seem to win.
+Here are quick peeks into how some of the ports look. To be honest, some things don't look as good as they might on a host machine and I believe it's either 1) a virtualization penalty in the graphics rendering or 2) Wayland...but then some apps look worse on X11 so you can't seem to win.
 
 - Alacritty
   ![alacritty-demo](./assets/alacritty-demo.png)
