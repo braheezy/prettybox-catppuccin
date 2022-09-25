@@ -58,28 +58,44 @@ Or
 # Demos
 Here are quick peeks into how some of the ports look. To be honest, some things don't look as good as they might on a host machine and I believe it's either 1) a virtualization penalty in the graphics rendering or 2) Wayland...but then some apps look worse on X11 so you can't seem to win.
 
-- Alacritty
-  ![alacritty-demo](./assets/alacritty-demo.png)
-  - White border because of Wayland.
-- Cursors
-  ![cursors-demo](./assets/cursors-demo.gif)
-  - Moving around the window to show off different cursor looks.
-- Firefox
-  ![firefox-demo](./assets/firefox-demo.png)
-  - Default Firefox with theme. Side bar really shows it off.
-- Gnome Terminal
-  ![gnome-terminal-demo](./assets/gnome-terminal-demo.png)
-- GTK
-  ![gtk-demo](./assets/gtk-demo.gif)
-  - Showing different UI components of system menu
-- Kitty
-  ![kitty-demo](./assets/kitty-demo.png)
-- Neovim
-  ![neovim-demo](./assets/neovim-demo.gif)
-- VS Code
-  ![vs-code-demo](./assets/vs-code-demo.gif)
-- Wallpapers
-  ![wallpapers-demo](./assets/wallpapers-demo.gif)
+## Alacritty
+White border because of Wayland.
+
+![alacritty-demo](./assets/alacritty-demo.png)
+
+## Cursors
+Moving around the window to show off different cursor looks.
+
+![cursors-demo](./assets/cursors-demo.gif)
+
+## Firefox
+Default Firefox with theme. Side bar really shows it off.
+
+![firefox-demo](./assets/firefox-demo.png)
+
+## Gnome Terminal
+![gnome-terminal-demo](./assets/gnome-terminal-demo.png)
+
+## GTK
+Showing different UI components in system menu
+
+![gtk-demo](./assets/gtk-demo.gif)
+
+## Kitty
+![kitty-demo](./assets/kitty-demo.png)
+
+## Neovim
+![neovim-demo](./assets/neovim-demo.gif)
+
+## VS Code
+Different files in the Catppuccin repo.
+
+![vs-code-demo](./assets/vs-code-demo.gif)
+
+## Wallpapers
+Changing wallpapers in the system menu.
+
+![wallpapers-demo](./assets/wallpapers-demo.gif)
 
 # Build
 For your distro, install the following:
