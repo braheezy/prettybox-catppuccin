@@ -1,5 +1,5 @@
 # prettybox-catppuccin
-This project provides a provisioned VM to show off various [Catppuccin](https://github.com/catppuccin) ports.
+This project provides a provisioned VM to show off various [Catppuccin](https://github.com/catppuccin) ports. See the [Demos](#demos) below.
 
 [Packer](https://www.packer.io/) is used to create the images and [Ansible](https://docs.ansible.com/ansible/latest/index.html) does most of the provisioning. [Vagrant](https://www.vagrantup.com/docs) boxes are produced at the end to make using the VMs easy. To use the VMs, you'll need a hypervisor. This projects aims to support [VirtualBox](https://www.oracle.com/virtualization/virtualbox/) and [QEMU with Libvirt](https://unix.stackexchange.com/questions/486301/whats-the-difference-between-kvm-qemu-and-libvirt).
 
@@ -54,6 +54,32 @@ Finally, use `vagrant` to run the machine for the hypervisor you have installed:
 Or
 
     vagrant up --provider libvirt
+
+# Demos
+Here are quick peeks into how some of the ports look. To be honest, some things don't look as good as they might on a host machine and I believe it's either 1) a virtualization penalty in the graphics rendering 2) Wayland. But then some apps look worse on X11 so you can't seem to win.
+
+- Alacritty
+  ![alacritty-demo](./assets/alacritty-demo.png)
+  - White border because of Wayland.
+- Cursors
+  ![cursors-demo](./assets/cursors-demo.gif)
+  - Moving around the window to show off different cursor looks.
+- Firefox
+  ![firefox-demo](./assets/firefox-demo.png)
+  - Default Firefox with theme. Side bar really shows it off.
+- Gnome Terminal
+  ![gnome-terminal-demo](./assets/gnome-terminal-demo.png)
+- GTK
+  ![gtk-demo](./assets/gtk-demo.gif)
+  - Showing different UI components of system menu
+- Kitty
+  ![kitty-demo](./assets/kitty-demo.png)
+- Neovim
+  ![neovim-demo](./assets/neovim-demo.gif)
+- VS Code
+  ![vs-code-demo](./assets/vs-code-demo.gif)
+- Wallpapers
+  ![wallpapers-demo](./assets/wallpapers-demo.gif)
 
 # Build
 For your distro, install the following:
